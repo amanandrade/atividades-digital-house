@@ -1,0 +1,50 @@
+[
+    {
+        "nome": "teste 1",
+        "descricao": "descrcao1",
+        "preco": "10",
+        "foto": "WhatsApp Image 2019-10-16 at 13.25.20.jpeg"
+    },
+    {
+        "nome": "teste 2",
+        "descricao": "descriacao do produto 2",
+        "preco": "20",
+        "foto": "WhatsApp Image 2019-10-16 at 13.25.20.jpeg"
+    },
+    {
+        "nome": "teste 3",
+        "descricao": "descricao 3 do produto",
+        "preco": "30",
+        "foto": ".\/fotos_produtos"
+    },
+    {
+        "nome": "teste 3",
+        "descricao": "descrcao do teste 4",
+        "preco": "40",
+        "foto": ".\/fotos_produtosWhatsApp Image 2019-10-16 at 13.25.20.jpeg"
+    },
+    {
+        "nome": "teste 5",
+        "descricao": "descricao teste 5",
+        "preco": "50",
+        "foto": ".\/fotos_produtos\/WhatsApp Image 2019-10-16 at 13.25.20.jpeg"
+    },
+    {
+        "nome": "test7",
+        "descricao": "teste7 ",
+        "preco": "70",
+        "foto": ".\/fotos_produtos\/WhatsApp Image 2019-10-16 at 13.25.20.jpeg"
+    },
+    {
+        "nome": "teste8",
+        "descricao": "teste 8",
+        "preco": "80",
+        "foto": ".\/fotos_produtos\/WhatsApp Image 2019-10-16 at 14.11.25.jpeg"
+    },
+    {
+        "nome": "teste9",
+        "descricao": "teste 9",
+        "preco": "90",
+        "foto": ".\/fotos_produtos\/WhatsApp Image 2019-10-16 at 13.25.20.jpeg"
+    }
+]
