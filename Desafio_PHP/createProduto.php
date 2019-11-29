@@ -1,65 +1,70 @@
 <?php 
 
-    $erro_numero = false;
-    $erro_nome = false;
-    $erro_foto = false;
+$erro_numero = false;
+$erro_nome = false;
+$erro_foto = false;
 
-    if($_POST){
-
-        //validação do campo preço
-        if(!is_numeric($_POST['preco'])){
-           $erro_numero = true;
-        };
-
-        //validação do erro de nome do produto
-        if($_POST['nome']){
-            $erro_nome = false;
-        } else {
-            $erro_nome = true;
-        };
-
-        //validação do erro de foto
-        if($_FILES['foto']['name']){
-            $erro_foto = false;
-        } else {
-            $erro_foto = true;
-        };
-
-        //salvando foto
-        if($_FILES['foto']['error']==0){
-            $nomeFoto = $_FILES['foto']['name'];
-            $tmpFoto = $_FILES['foto']['tmp_name'];
-            $urlFoto = './fotos_produtos/' . $nomeFoto;
-            
-
-            move_uploaded_file($tmpFoto, $urlFoto);
-        };
-
-        //salvando produtos no json, restringindo o form pelos campos de imput
-        $produtoJson = file_get_contents('./basedados/produtoscadastrados.json');
-        $arrayProdutos = json_decode($produtoJson, true);
-        $novoProduto = ['nome' => $_POST['nome'], 'descricao' => $_POST['descricao'], 'preco' => $_POST['preco'], 'foto' => $urlFoto];
-        $arrayProdutos[] = $novoProduto;
-        
-        function idProduto ($novoProduto){
-            if (empty($novoProduto)) {
-                $arrayProdutos['id'] = 1;
-              } else {
-                $arrayProdutos['id'] = ++end($arrayProdutos)['id'];    
-              }; 
-            
-              array_push($novoProduto, $arrayProdutos['id']);
-        };
-        
-        $novoProdutoJson = json_encode($arrayProdutos);
-        $salvouProduto = file_put_contents('./basedados/produtoscadastrados.json', $novoProdutoJson);
-        if ($salvouProduto) {
-            header('Location: indexProdutos.php');
-        };
-        
-        //criando um id
-  
+if($_POST){
+    
+    //validação do campo preço
+    if(!is_numeric($_POST['preco'])){
+        $erro_numero = true;
     };
+    
+    //validação do erro de nome do produto
+    if($_POST['nome']){
+        $erro_nome = false;
+    } else {
+        $erro_nome = true;
+    };
+
+    //validação do erro de foto
+    if($_FILES['foto']['name']){
+        $erro_foto = false;
+    } else {
+        $erro_foto = true;
+    };
+    
+    //salvando foto
+    if($_FILES['foto']['error']==0){
+        $nomeFoto = $_FILES['foto']['name'];
+        $tmpFoto = $_FILES['foto']['tmp_name'];
+        $urlFoto = './fotos_produtos/' . $nomeFoto;
+        
+        
+        move_uploaded_file($tmpFoto, $urlFoto);
+    };
+    
+    //salvando produtos no json, restringindo o form pelos campos de imput
+    function getProdutos(){
+        $produtoJson = file_get_contents('./basedados/produtoscadastrados.json');
+        return json_decode($produtoJson, true);
+    };
+    
+    $novoProduto = ['nome' => $_POST['nome'], 'descricao' => $_POST['descricao'], 'preco' => $_POST['preco'], 'foto' => $urlFoto];
+    
+    function storeProdutos($novoProduto){
+        $arrayProdutos = getProdutos();
+        
+        if (empty($arrayProdutos)) {
+            $novoProduto['id'] = 1;
+        } else {
+            $novoProduto['id'] = ++end($arrayProdutos)['id'];    
+        }
+        
+        array_push($arrayProdutos, $novoProduto);
+        $novoProdutoJson = json_encode($arrayProdutos);
+        
+        return file_put_contents('./basedados/produtoscadastrados.json', $novoProdutoJson);
+    };
+    
+    if(storeProdutos($novoProduto)){
+        if(empty($erro_foto) && empty($erro_nome) && empty($erro_numero)){
+            return header('Location: indexProdutos.php');}
+    };
+    
+};
+
 ?>
 
 <!DOCTYPE html>
@@ -115,6 +120,8 @@
 
             </form>
         </main>
-        
-    </body>
+        <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script> 
+</body>
 </html>

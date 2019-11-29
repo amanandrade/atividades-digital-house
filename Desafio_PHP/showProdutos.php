@@ -4,11 +4,43 @@
         $produtosJson = file_get_contents("./basedados/produtoscadastrados.json");
         return json_decode($produtosJson, true);
     };
-    $getprodutos = getProdutos();
+    
+    //pesquisar o id 
+    if ($_GET){
+        $id = $_GET['id'];
+        function searchProduto($id) {
+            $produtos = getProdutos();
+            foreach($produtos as $produto)
+              if ($produto['id'] == $id)
+                return $produto;
+            
+            return false;
+        };
+        $produtoID = searchProduto($id);
+    };
 
-    echo('<pre>');
-    print_r($getprodutos);
-    echo('</pre>');
+    //deletar o id
+    function deletarProduto($id){
+        $id = $_POST['id'];
+        $produtos = getProdutos();
+        foreach ($produtos as $posicao => $produto)
+        if ($produto['id'] == $id){
+            array_splice($produtos, $posicao, 1);
+            
+            $json_produtos = json_encode($produtos);
+            return file_put_contents("./basedados/produtoscadastrados.json", $json_produtos);
+        };
+        return false;
+    };
+    
+    if($_POST){
+        $deletou = deletarProduto($id);
+        if($deletou){ 
+            header('Location: indexProdutos.php');
+        };
+    };
+
+
 ?>
 
 <!DOCTYPE html>
@@ -28,18 +60,23 @@
         </div>
         <div class="row justify-content-center my-3">
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="<?= $getprodutos[4]['foto']?>" alt="Imagem foto do produto">  
+                <img class="card-img-top" src="<?= $produtoID['foto']?>" alt="Imagem foto do produto">  
                 <div class="card-body">
-                    <h5 class="card-title"><?= $getprodutos[4]['nome']?></h5>
-                    <p class="card-text"><?= $getprodutos[4]['descricao']?></p>
-                    <div class="row justify-content-around">
-                        <a href="./editProduto.php" class="btn btn-primary">Editar</a>
-                        <a href="#" class="btn btn-danger">Excluir</a>
-                    </div>
+                    <h5 class="card-title"><?= $produtoID['nome']?></h5>
+                    <p class="card-text"><?= $produtoID['descricao']?></p>
+                    <form class="row justify-content-around" method="POST">
+                        <a href="editProduto.php?id=<?= $produtoID['id'] ?>" class="btn btn-primary">Editar</a>
+                        <input type="hidden" name="id" value="<?= $_POST['id'] ?>">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
                 </div>
             </div>
         
         </div>
     </div>
+
+    <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>
 </body>
 </html>
