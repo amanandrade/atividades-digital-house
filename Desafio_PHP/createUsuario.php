@@ -1,6 +1,10 @@
 <?php 
+session_start();
+if (!$_SESSION['usuario']) header('Location: login.php');
+
     include('validacoesUsuario.php');
     include('userFunction.php');
+    
 
     //criando array de usuários após as validações
     if($_POST){
@@ -17,14 +21,18 @@
                     'email' => $_POST['email'],
                     'senha' => password_hash($_POST['senha'], PASSWORD_DEFAULT),
                 ];
-                //chamando a função de criação de usuário
             };
+            
+            //chamando a função de criação de usuário
+            //storeUser($usuario);
             $salvou = storeUser($usuario);
 
             if ($salvou){
                 return header('Location: showUsuarios.php');
             };
+
     };
+    
 
 ?>
 
@@ -39,7 +47,33 @@
     <title>Novo usuário</title>
 </head>
 <body>
-    <main class="container mt-5">
+    <nav class="container-fluid p-3 mb-3">
+        <span class="navbar-brand ml-5" href="#">Desafio PHP</span>
+        <ul class="nav nav-tabs justify-content-end mx-5">
+            <li class="nav-item">
+                <a class="nav-link" href="home.php">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Produtos</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="indexProdutos.php">Todos Produtos</a>
+                <a class="dropdown-item" href="createProduto.php">Cadastrar Produtos</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuários</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="showUsuarios.php">Todos Usuários</a>
+                <a class="dropdown-item" href="createUsuario.php">Cadastrar Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.php">Sair</a>
+            </li>
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="row my-4">
+            <spam><h2>Cadastrar Usuário</h2></spam>
+        </div>
         <form method="post" enctype="multipart/form-data">
 
             <div class="col-md-6 mt-2">

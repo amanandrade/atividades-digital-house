@@ -1,4 +1,6 @@
 <?php 
+session_start();
+if (!$_SESSION['usuario']) header('Location: login.php');
 
     $erro_numero = false;
     $erro_nome = false;
@@ -79,8 +81,31 @@
     <title>Editar produto</title>
 </head>
 <body>
+    <nav class="container-fluid p-3 mb-3">
+        <span class="navbar-brand ml-5" href="#">Desafio PHP</span>
+        <ul class="nav nav-tabs justify-content-end mx-5">
+            <li class="nav-item">
+                <a class="nav-link" href="home.php">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Produtos</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="indexProdutos.php">Todos Produtos</a>
+                <a class="dropdown-item" href="createProduto.php">Cadastrar Produtos</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuários</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="showUsuarios.php">Todos Usuários</a>
+                <a class="dropdown-item" href="createUsuario.php">Cadastrar Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.php">Sair</a>
+            </li>
+        </ul>
+    </nav>
     <div class="container">
-        <div class="row justify-content-center my-4">
+        <div class="row my-4">
             <spam><h2>Editar produto</h2></spam>
         </div>
 

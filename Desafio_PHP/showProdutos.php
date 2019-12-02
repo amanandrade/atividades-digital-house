@@ -1,4 +1,7 @@
 <?php 
+session_start();
+if (!$_SESSION['usuario']) header('Location: login.php');
+
     //função para pegar os arquivos do produtoscadastrados.json
     function getProdutos(){
         $produtosJson = file_get_contents("./basedados/produtoscadastrados.json");
@@ -51,12 +54,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- inserindo o bootstrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Mostrar produto</title>
+    <title>Produto</title>
 </head>
 <body>
+    <nav class="container-fluid p-3 mb-3">
+        <span class="navbar-brand ml-5" href="#">Desafio PHP</span>
+        <ul class="nav nav-tabs justify-content-end mx-5">
+            <li class="nav-item">
+                <a class="nav-link" href="home.php">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Produtos</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="indexProdutos.php">Todos Produtos</a>
+                <a class="dropdown-item" href="createProduto.php">Cadastrar Produtos</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuários</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="showUsuarios.php">Todos Usuários</a>
+                <a class="dropdown-item" href="createUsuario.php">Cadastrar Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.php">Sair</a>
+            </li>
+        </ul>
+    </nav>
     <div class="container mt-4">
         <div class="row justify-content-center">
-            <span><h2>Lista de produtos</h2></span>
+            <span><h2>Meu Produto</h2></span>
         </div>
         <div class="row justify-content-center my-3">
             <div class="card" style="width: 18rem;">

@@ -1,4 +1,7 @@
 <?php 
+session_start();
+if (!$_SESSION['usuario']) header('Location: login.php');
+
     require 'userFunction.php';
 
     if ($_GET && $_GET['id']) {
@@ -21,8 +24,31 @@
     <title>Mostrar usuários</title>
 </head>
 <body>
+    <nav class="container-fluid p-3 mb-3">
+        <span class="navbar-brand ml-5" href="#">Desafio PHP</span>
+        <ul class="nav nav-tabs justify-content-end mx-5">
+            <li class="nav-item">
+                <a class="nav-link" href="home.php">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Produtos</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="indexProdutos.php">Todos Produtos</a>
+                <a class="dropdown-item" href="createProduto.php">Cadastrar Produtos</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Usuários</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="showUsuarios.php">Todos Usuários</a>
+                <a class="dropdown-item" href="createUsuario.php">Cadastrar Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.php">Sair</a>
+            </li>
+        </ul>
+    </nav>
     <div class="container mt-4">
-    <span><h2>Lista de usuários</h2></span>
+    <span><h2>Todos Usuários</h2></span>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -40,10 +66,12 @@
                         <td><?= $usuario['nome'] ?></td>
                         <td><?= $usuario['email'] ?></td>
                         <td><a href="editUsuario.php?id=<?= $usuario['id'] ?>"><i class="material-icons" style="font-size: 30px">edit</i></a></th>
-                        <form method="get">
-                            <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
-                            <td><buttom class="btn btn-danger"><i class="material-icons" style="font-size: 30px">delete</i></buttom></td>
-                        </form>
+                        <td>
+                            <form method="GET">
+                                <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
+                                <buttom class="btn btn-danger"><i class="material-icons" style="font-size: 30px">delete</i></buttom>
+                            </form>
+                        </td>
                     </tr>
                 <?php }; ?>
             </tbody>
