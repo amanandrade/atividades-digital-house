@@ -1,9 +1,9 @@
 <?php 
-session_start();
-if (!$_SESSION['usuario']) header('Location: login.php');
+    session_start();
+    if (!$_SESSION['usuario']) header('Location: login.php');
 
     require 'userFunction.php';
-
+    
     if ($_GET && $_GET['id']) {
         if (!$_SESSION['usuario']) return header('Location: createUsuario.php');
         deleteUsuario($_GET['id']);
@@ -69,7 +69,7 @@ if (!$_SESSION['usuario']) header('Location: login.php');
                         <td>
                             <form method="GET">
                                 <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
-                                <buttom class="btn btn-danger"><i class="material-icons" style="font-size: 30px">delete</i></buttom>
+                                <buttom type="submit" class="btn btn-danger"><i class="material-icons" style="font-size: 30px">delete</i></buttom>
                             </form>
                         </td>
                     </tr>

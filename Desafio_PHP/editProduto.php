@@ -69,6 +69,7 @@ if (!$_SESSION['usuario']) header('Location: login.php');
         header('Location: indexProdutos.php');
       };
     };
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

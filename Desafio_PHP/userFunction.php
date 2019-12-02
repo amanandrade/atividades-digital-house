@@ -28,6 +28,16 @@
         return file_put_contents(USERJSON, $json_usuarios);
     };
 
+    //pesquisar usuário para deletar
+    function searchUser($id) {
+        $usuarios = getProdutos();
+        foreach($usuarios as $usuario)
+          if ($usuario['id'] == $id)
+            return $usuario;
+        
+        return false;
+    };
+    
     //excluindo usuário
     function deleteUsuario($id) {
         $usuarios = getUser();
@@ -66,5 +76,7 @@
       }
       return false;
     };
+
+
 
 ?>

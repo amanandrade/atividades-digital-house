@@ -24,14 +24,13 @@ if (!$_SESSION['usuario']) header('Location: login.php');
 
     //deletar o id
     function deletarProduto($id){
-        $id = $_POST['id'];
         $produtos = getProdutos();
         foreach ($produtos as $posicao => $produto)
         if ($produto['id'] == $id){
             array_splice($produtos, $posicao, 1);
             
-            $json_produtos = json_encode($produtos);
-            return file_put_contents("./basedados/produtoscadastrados.json", $json_produtos);
+            $produtosJson = json_encode($produtos);
+            return file_put_contents("./basedados/produtoscadastrados.json", $produtosJson);
         };
         return false;
     };
